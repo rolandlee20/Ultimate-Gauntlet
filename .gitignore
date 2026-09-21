@@ -1,0 +1,16 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Agent/runtime state
+.gauntlet/
+.gauntlet-backup-*/
+.codex/state/
+.opencode/artifacts/
+
+# Local secrets and logs
+.env
+.env.*
+*.log

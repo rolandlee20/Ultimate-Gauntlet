@@ -1,0 +1,26 @@
+name: Validate Gauntlet
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Codex TOML
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import tomllib
+          for p in [Path("ChatGPT-Codex-Gauntlet/.codex/config.toml"), *Path("ChatGPT-Codex-Gauntlet/.codex/agents").glob("*.toml")]:
+              tomllib.loads(p.read_text())
+          print("Codex TOML OK")
+          PY
+      - name: Check package structure
+        run: |
+          test -f LICENSE
+          test -f AGENTS.md || test -f ChatGPT-Codex-Gauntlet/AGENTS.md
+          test -f ChatGPT-Codex-Gauntlet/.agents/skills/gauntlet/SKILL.md
+          test -f OpenCode-Gauntlet/opencode.jsonc

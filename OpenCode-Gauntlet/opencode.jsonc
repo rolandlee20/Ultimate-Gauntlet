@@ -1,0 +1,139 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "gauntlet-orchestrator",
+  "subagent_depth": 1,
+  "plugin": [
+    [
+      "@prevalentware/opencode-goal-plugin@0.1.49",
+      {
+        "auto_continue": true,
+        "defer_while_tasks_active": true,
+        "max_auto_turns": 25,
+        "min_continue_interval_seconds": 3,
+        "max_turn_time": 300,
+        "max_task_block_seconds": 900,
+        "max_prompt_failures": 3,
+        "default_token_budget": 200000,
+        "max_goal_duration_seconds": 1800,
+        "no_progress_token_threshold": 50,
+        "max_no_progress_turns": 2,
+        "restricted_agents": ["plan"],
+        "allow_goal_execution_from_plan": false,
+        "register_command": true,
+        "command_name": "goal"
+      }
+    ]
+  ],
+  "agents": {
+    "gauntlet-orchestrator": {
+      "description": "Primary autonomous project lead for the full evidence-gated Gauntlet.",
+      "mode": "primary",
+      "model": "opencode/muse-spark-1.3-contributor-free",
+      "prompt": "{file:./.opencode/agents/gauntlet-orchestrator.md}"
+    },
+    "architect": {
+      "description": "Senior architecture planner; read-only.",
+      "mode": "subagent",
+      "model": "opencode/muse-spark-1.3-contributor-free",
+      "prompt": "{file:./.opencode/agents/architect.md}",
+      "permission": {"edit": "deny"}
+    },
+    "architecture-redteam": {
+      "description": "Architecture red-team; read-only.",
+      "mode": "subagent",
+      "model": "opencode/muse-spark-1.3-contributor-free",
+      "prompt": "{file:./.opencode/agents/architecture-redteam.md}",
+      "permission": {"edit": "deny"}
+    },
+    "design-strategist": {
+      "description": "User-centered design strategist; read-only.",
+      "mode": "subagent",
+      "model": "opencode/mimo-v2.5-free",
+      "prompt": "{file:./.opencode/agents/design-strategist.md}",
+      "permission": {"edit": "deny"}
+    },
+    "design-redteam": {
+      "description": "Harsh experience/design red-team; read-only.",
+      "mode": "subagent",
+      "model": "opencode/mimo-v2.5-free",
+      "prompt": "{file:./.opencode/agents/design-redteam.md}",
+      "permission": {"edit": "deny"}
+    },
+    "builder": {
+      "description": "Primary implementation specialist.",
+      "mode": "subagent",
+      "model": "opencode/muse-spark-1.3-contributor-free",
+      "prompt": "{file:./.opencode/agents/builder.md}"
+    },
+    "systems-auditor": {
+      "description": "Deep systems/correctness auditor; read-only.",
+      "mode": "subagent",
+      "model": "opencode/nemotron-3-ultra-free",
+      "prompt": "{file:./.opencode/agents/systems-auditor.md}",
+      "permission": {"edit": "deny"}
+    },
+    "performance-auditor": {
+      "description": "Fast performance auditor; read-only.",
+      "mode": "subagent",
+      "model": "opencode/nemotron-3.5-lightning-free",
+      "prompt": "{file:./.opencode/agents/performance-auditor.md}",
+      "permission": {"edit": "deny"}
+    },
+    "visual-image-judge": {
+      "description": "Image-capable screenshot/state judge; read-only.",
+      "mode": "subagent",
+      "model": "opencode/muse-spark-1.3-contributor-free",
+      "prompt": "{file:./.opencode/agents/visual-image-judge.md}",
+      "permission": {"edit": "deny"}
+    },
+    "visual-video-judge": {
+      "description": "Video-capable runtime judge; read-only.",
+      "mode": "subagent",
+      "model": "opencode/mimo-v2.5-free",
+      "prompt": "{file:./.opencode/agents/visual-video-judge.md}",
+      "permission": {"edit": "deny"}
+    },
+    "player-judge": {
+      "description": "Natural first-time user/player judge; read-only.",
+      "mode": "subagent",
+      "model": "opencode/mimo-v2.5-free",
+      "prompt": "{file:./.opencode/agents/player-judge.md}",
+      "permission": {"edit": "deny"}
+    },
+    "release-judge": {
+      "description": "Independent public-release judge; read-only.",
+      "mode": "subagent",
+      "model": "opencode/muse-spark-1.3-contributor-free",
+      "prompt": "{file:./.opencode/agents/release-judge.md}",
+      "permission": {"edit": "deny"}
+    },
+    "evidence-referee": {
+      "description": "Evidence referee; read-only and authoritative about evidence sufficiency.",
+      "mode": "subagent",
+      "model": "opencode/nemotron-3-ultra-free",
+      "prompt": "{file:./.opencode/agents/evidence-referee.md}",
+      "permission": {"edit": "deny"}
+    },
+    "blindspot-checker": {
+      "description": "Independent anti-bias secondary reviewer; never sole gate authority.",
+      "mode": "subagent",
+      "model": "opencode/big-pickle",
+      "prompt": "{file:./.opencode/agents/blindspot-checker.md}",
+      "permission": {"edit": "deny"}
+    },
+    "asset-artist": {
+      "description": "General 3D/visual asset specialist for connected DCC tooling.",
+      "mode": "subagent",
+      "model": "opencode/muse-spark-1.3-contributor-free",
+      "prompt": "{file:./.opencode/agents/asset-artist.md}"
+    },
+    "ling-auxiliary": {
+      "description": "Optional lightweight auxiliary critic; never primary or gate authority.",
+      "mode": "subagent",
+      "model": "opencode/ling-3.0-flash-fin-free",
+      "prompt": "{file:./.opencode/agents/ling-auxiliary.md}",
+      "permission": {"edit": "deny"},
+      "hidden": true
+    }
+  }
+}
